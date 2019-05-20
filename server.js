@@ -37,5 +37,5 @@ app.listen(port, function (err) {
   if (err) {
     throw err;
   }
-  console.log("== Server listening on port 8000");
+  console.log("== Server listening on port", port);
 });
