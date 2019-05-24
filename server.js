@@ -5,7 +5,10 @@ var exphbs = require('express-handlebars');
 var app = express();
 var port = 3001;
 
-app.engine('handlebars', exphbs({ defaultLayout: false }));
+var peopleData = require('./peopleData');
+console.log("== peopleData", peopleData);
+
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 app.use(express.static('public'));
@@ -14,16 +17,8 @@ app.get('/people', function (req, res, next) {
   res.status(200).sendFile(__dirname + '/public/people.html');
 });
 
-var availablePeople = [
-  'luke',
-  'leia',
-  'rey',
-  'finn',
-  'r2d2'
-];
-app.get('/people/:person', function (req, res, next) {
-
-  res.render('photoPage', {
+app.get('/kitten', function (req, res, next) {
+  res.status(200).render('photoPage', {
     name: "Kitten",
     photos: [
       {
@@ -34,17 +29,28 @@ app.get('/people/:person', function (req, res, next) {
         url: "http://placekitten.com/480/480?image=3",
         caption: "Another kitty"
       }
-    ]
+    ],
+    displayTheParagraph: true
   });
+});
 
-  // var person = req.params.person.toLowerCase();
-  // if (availablePeople.indexOf(person) >= 0) {
-  //   res.status(200).sendFile(
-  //     __dirname + '/public/people/' + person + '.html'
-  //   );
-  // } else {
-  //   next();
-  // }
+// var availablePeople = [
+//   'luke',
+//   'leia',
+//   'rey',
+//   'finn',
+//   'r2d2'
+// ];
+app.get('/people/:person', function (req, res, next) {
+  var person = req.params.person.toLowerCase();
+  if (peopleData[person]) {
+    res.status(200).render('photoPage', peopleData[person]);
+    // res.status(200).sendFile(
+    //   __dirname + '/public/people/' + person + '.html'
+    // );
+  } else {
+    next();
+  }
 });
 
 app.get("*", function (req, res, next) {

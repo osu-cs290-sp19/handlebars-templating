@@ -1,84 +1,54 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Photos of People - {{name}}</title>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,400" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" media="screen">
-    <link rel="stylesheet" href="/style.css">
+<main class="photo-page">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.runtime.js" charset="utf-8" defer></script>
-    <script src="/photoCardTemplate.js" charset="utf-8" defer></script>
-    <script src="/index.js" charset="utf-8" defer></script>
-  </head>
-  <body>
+  <div class="title-container">
+    <h1>Photos of {{name}}</h1>
+  </div>
 
-    <header>
-      <h1 class="site-title">Photos of People</h1>
-    </header>
+  <div class="photo-card-container">
 
-    <nav class="navbar">
-      <ul class="navlist">
-        <li class="navitem"><a href="/">Home</a></li>
-        <li class="navitem"><a href="/people">People</a></li>
-        <li class="navitem right"><a href="#">Login</a></li>
-      </ul>
-    </nav>
+    {{#each photos}}
+      {{> photoCard}}
+    {{/each}}
 
-    <main class="photo-page">
+  </div>
 
-      <div class="title-container">
-        <h1>Photos of {{name}}</h1>
-      </div>
+  {{#if displayTheParagraph}}
+    <p>The paragraph is being displayed</p>
+  {{else}}
+    <p>The paragraph is NOT being displayed.</p>
+  {{/if}}
 
-      <div class="photo-card-container">
+</main>
 
-        {{#each photos}}
-          {{> photoCard}}
-        {{/each}}
+<button type="button" id="add-photo-button"><i class="fa fa-camera"></i></button>
 
-      </div>
+<div id="modal-backdrop" class="hidden"></div>
+<div id="add-photo-modal" class="hidden">
+  <div class="modal-dialog">
 
-      {{#if displayTheParagraph}}
-        <p>The paragraph is being displayed</p>
-      {{else}}
-        <p>The paragraph is NOT being displayed.</p>
-      {{/if}}
-
-    </main>
-
-    <button type="button" id="add-photo-button"><i class="fa fa-camera"></i></button>
-
-    <div id="modal-backdrop" class="hidden"></div>
-    <div id="add-photo-modal" class="hidden">
-      <div class="modal-dialog">
-
-        <div class="modal-header">
-          <h3>Post a photo</h3>
-          <button type="button" id="modal-close" class="modal-hide-button">&times;</button>
-        </div>
-
-        <div class="modal-body">
-
-          <div class="photo-input-element">
-            <label for="photo-url-input">Photo URL</label>
-            <input type="text" id="photo-url-input">
-          </div>
-
-          <div class="photo-input-element">
-            <label for="photo-caption-input">Caption</label>
-            <input type="text" id="photo-caption-input"></input>
-          </div>
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" id="modal-cancel" class="modal-hide-button action-button">Cancel</button>
-          <button type="button" id="modal-accept" class="action-button">Create Post</button>
-        </div>
-
-      </div>
+    <div class="modal-header">
+      <h3>Post a photo</h3>
+      <button type="button" id="modal-close" class="modal-hide-button">&times;</button>
     </div>
 
-  </body>
-</html>
+    <div class="modal-body">
+
+      <div class="photo-input-element">
+        <label for="photo-url-input">Photo URL</label>
+        <input type="text" id="photo-url-input">
+      </div>
+
+      <div class="photo-input-element">
+        <label for="photo-caption-input">Caption</label>
+        <input type="text" id="photo-caption-input"></input>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" id="modal-cancel" class="modal-hide-button action-button">Cancel</button>
+      <button type="button" id="modal-accept" class="action-button">Create Post</button>
+    </div>
+
+  </div>
+</div>
